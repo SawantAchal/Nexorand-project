@@ -43,11 +43,11 @@ This is a simple Task Manager API built with Node.js, Express.js, and MongoDB. I
 
 4. **Run the Application**
 
-    \`\`\`bash
+    \`\`\`
     npm run server
     \`\`\`
 
-    The server will start on \`http://localhost:4000\`.
+    The server will start on `http://localhost:4000/`.
 
 ## API Endpoints
 
