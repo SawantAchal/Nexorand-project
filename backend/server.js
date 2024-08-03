@@ -1,24 +1,28 @@
-import express from 'express'
+import express from 'express';
 import { connectDB } from './config/db.js';
-import 'dotenv/config'
+import 'dotenv/config';
 import userRouter from './routes/userRoutes.js';
 import taskRouter from './routes/taskRoutes.js';
 
 const app = express();
-const port =process.env.PORT || 4000;
+const port = process.env.PORT || 4000;
 
+// Middleware to parse JSON request bodies
 app.use(express.json());
 
-//db Connect
+// Connect to the database
 connectDB();
 
-app.use('/api/user' , userRouter);
-app.use('/api/tasks' , taskRouter);
+// Routes
+app.use('/api/user', userRouter);  // Routes for user-related operations
+app.use('/api/tasks', taskRouter); // Routes for task-related operations
 
-app.get('/' ,(req , res) => {
-    res.send("API working")
-})
+// Test route to check if the API is working
+app.get('/', (req, res) => {
+    res.send("API working");
+});
 
+// Start the server
 app.listen(port, () => {
-    console.log(`server started on http://localhost:${port}`)
-})
+    console.log(`Server started on http://localhost:${port}`);
+});

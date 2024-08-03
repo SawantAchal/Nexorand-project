@@ -1,10 +1,18 @@
 import mongoose from "mongoose";
 
+// Define the schema for the User model
 const userSchema = new mongoose.Schema({
-    name:{type:String,required:true},
-    email:{type:String,required:true,unique:true},
-    password:{type:String,required:true},
-},{minimize:false});
+    // Name of the user
+    name: { type: String, required: true },
+    
+    // Email of the user, must be unique
+    email: { type: String, required: true, unique: true },
+    
+    // Password of the user
+    password: { type: String, required: true },
+}, { minimize: false }); // Avoid removing empty objects when saving
 
-const userModel = mongoose.model.user || mongoose.model("user" ,userSchema)
+// Create or get the User model
+const userModel = mongoose.models.user || mongoose.model("user", userSchema);
+
 export default userModel;

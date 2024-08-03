@@ -1,72 +1,82 @@
 import userModel from "../model/userModel.js";
-import jwt from 'jsonwebtoken'
-import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 
+// Function to create a JWT token
 const createToken = (id) => {
-    return jwt.sign({id} , process.env.JWT_SECRET)
+    // Sign and return a token with the user's ID and a secret key
+    return jwt.sign({ id }, process.env.JWT_SECRET);
 }
 
-//register user
+// Register a new user
 const signup = async (req, res) => {
-    const {name , password , email} = req.body;
+    const { name, password, email } = req.body;
 
-        // Password validation regex
-        const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    //check email is already register or not
+    // Password validation regex for strong password requirements
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    
     try {
-        const exists = await userModel.findOne({email});
+        // Check if a user with the given email already exists
+        const exists = await userModel.findOne({ email });
         if (exists) {
-            return res.json({success:false,messsage:"User already exixts"})
+            return res.json({ success: false, message: "User already exists" });
         }
 
-        // Check if the password is strong
+        // Validate the password strength using regex
         if (!passwordRegex.test(password)) {
             return res.json({ success: false, message: "Password must be at least 8 characters long, contain one uppercase letter, one number, and one special symbol." });
         }
 
-        // if (password.length<8) {
-        //     return res.json({success:false,messsage:"Please enter strong password"})
-        // }
+        // Encrypt the password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
 
-        //to encrypt the passowrd
-        const salt = await bcrypt.genSalt(10)
-        const hashedPassword = await bcrypt.hash(password,salt);
-
-        // create new user
+        // Create a new user with the provided details and the hashed password
         const newUser = new userModel({
-            name:name,
-            email:email,
-            password:hashedPassword,
-        })
+            name: name,
+            email: email,
+            password: hashedPassword,
+        });
 
-        // to save the user in database
-        const user = await newUser.save()
-        const token = createToken(user._id)
-        res.json({success:true,token})
-
+        // Save the new user to the database
+        const user = await newUser.save();
+        // Generate a token for the new user
+        const token = createToken(user._id);
+        // Respond with success status and the token
+        res.json({ success: true, token });
     } catch (error) {
-        console.log(error)
-        res.json({success:false,messsage:"Error"})
+        // Log any errors and respond with a failure message
+        console.log(error);
+        res.json({ success: false, message: "Error" });
     }
 }
 
-//login user
-const login = async(req, res) => {
-    const {email , password} = req.body;
+// Log in an existing user
+const login = async (req, res) => {
+    const { email, password } = req.body;
+    
     try {
-        const user = await userModel.findOne({email});
+        // Find the user with the given email
+        const user = await userModel.findOne({ email });
         if (!user) {
-            return res.json({success:false, messsage:"user Does not exist"})
+            return res.json({ success: false, message: "User does not exist" });
         }
-        const isMatch = await bcrypt.compare(password , user.password)
+
+        // Compare the provided password with the stored hashed password
+        const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            return res.json({success:false,messsage:"Invalid credentials"})
+            return res.json({ success: false, message: "Invalid credentials" });
         }
-        const token = createToken(user._id)
-        res.json({success:true,token})
+
+        // Generate a token for the logged-in user
+        const token = createToken(user._id);
+        // Respond with success status and the token
+        res.json({ success: true, token });
     } catch (error) {
-        console.log(error)
-        res.json({success:false,messsage:"Error"})
+        // Log any errors and respond with a failure message
+        console.log(error);
+        res.json({ success: false, message: "Error" });
     }
 }
-export {signup , login}
+
+export { signup, login }
