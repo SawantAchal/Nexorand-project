@@ -3,6 +3,7 @@ import { connectDB } from './config/db.js';
 import 'dotenv/config';
 import userRouter from './routes/userRoutes.js';
 import taskRouter from './routes/taskRoutes.js';
+import { setupSwagger } from './config/swagger.js';
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -12,6 +13,9 @@ app.use(express.json());
 
 // Connect to the database
 connectDB();
+
+//setup swagger
+setupSwagger(app)
 
 // Routes
 app.use('/api/user', userRouter);  // Routes for user-related operations

@@ -1,0 +1,233 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Task Management API",
+      "description": "API documentation for the Task Management project"
+    },
+    "host": "localhost:4000",
+    "basePath": "/api",
+    "schemes": ["http"],
+    "paths": {
+      "/user/signup": {
+        "post": {
+          "tags": ["User"],
+          "summary": "Register a new user",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "user",
+              "description": "User to be created",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "User created successfully"
+            },
+            "400": {
+              "description": "Invalid input"
+            }
+          }
+        }
+      },
+      "/user/login": {
+        "post": {
+          "tags": ["User"],
+          "summary": "Login a user",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "user",
+              "description": "User credentials",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Login successful"
+            },
+            "400": {
+              "description": "Invalid credentials"
+            }
+          }
+        }
+      },
+      "/tasks": {
+        "post": {
+          "tags": ["Task"],
+          "summary": "Add a new task",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "task",
+              "description": "Task to be created",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/Task"
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Task created successfully"
+            },
+            "500": {
+              "description": "Server error"
+            }
+          }
+        },
+        "get": {
+          "tags": ["Task"],
+          "summary": "Get all tasks for the logged-in user",
+          "responses": {
+            "200": {
+              "description": "Successful operation",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Task"
+                }
+              }
+            },
+            "500": {
+              "description": "Server error"
+            }
+          }
+        }
+      },
+      "/tasks/{id}": {
+        "delete": {
+          "tags": ["Task"],
+          "summary": "Remove a task",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Task removed successfully"
+            },
+            "404": {
+              "description": "Task not found"
+            },
+            "500": {
+              "description": "Server error"
+            }
+          }
+        },
+        "put": {
+          "tags": ["Task"],
+          "summary": "Update a task",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "task",
+              "description": "Task to be updated",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/Task"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Task updated successfully"
+            },
+            "404": {
+              "description": "Task not found"
+            },
+            "500": {
+              "description": "Server error"
+            }
+          }
+        }
+      },
+      "/tasks/day/{day}": {
+        "get": {
+          "tags": ["Task"],
+          "summary": "Get tasks by day",
+          "parameters": [
+            {
+              "name": "day",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful operation",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Task"
+                }
+              }
+            },
+            "500": {
+              "description": "Server error"
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "User": {
+        "required": ["name", "email", "password"],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "Task": {
+        "required": ["title"],
+        "properties": {
+          "userId": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "completed": {
+            "type": "boolean"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
+  
