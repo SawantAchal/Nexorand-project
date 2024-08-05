@@ -10,7 +10,7 @@ const Header = () => {
     const cartHasItems = cart.length > 0 ;
 
   return (
-    <header className='h-16 flex justify-between items-center sm:text-2xl text-lg font-bold shadow-xl px-4 sm:px-10 bg-white bg-opacity-75 cursor-pointer '>
+    <header className='h-16 flex justify-between items-center sm:text-2xl text-lg font-bold shadow-xl px-4 sm:px-10 bg-white bg-opacity-100 cursor-pointer fixed w-full'>
         <section>
             <Link to={'/'}>E-COM</Link>
         </section>

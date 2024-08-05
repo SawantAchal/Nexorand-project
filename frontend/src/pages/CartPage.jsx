@@ -1,15 +1,17 @@
 import React, { useContext } from 'react'
 import { CartContext, useCart } from '../contexts/cartContext'
+import Header from '../components/Header'
 
 const CartPage = () => {
   const {cart , removeFromCart } = useContext(CartContext)
   return (
-    <div className="p-8">
-    <h1 className="text-4xl font-bold mb-6">Cart</h1>
+    <div className="">
+      <Header/>
+    <h1 className="text-4xl font-bold mb-6 pt-20 text-center ">Cart</h1>
     {cart.length === 0 ? (
-      <p>Your cart is empty</p>
+      <p className='text-center text-2xl'>Your cart is empty</p>
     ) : (
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 m-5">
         {cart.map(product => (
           <div key={product.id} className="border rounded-lg shadow-lg overflow-hidden">
             <img src={product.image} alt={product.name} className="w-full h-48 object-cover" />

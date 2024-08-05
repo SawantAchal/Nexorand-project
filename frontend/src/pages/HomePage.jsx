@@ -6,13 +6,11 @@ import ProductPage from './ProductPage'
 const HomePage = () => {
   return (
     <div>
-    <main style={{backgroundImage : `url(${bg})`}} className='bg-cover bg-center min-h-screen'>
+      <main style={{backgroundImage : `url(${bg})`}} className='bg-cover bg-center min-h-screen'>
         <Header/>
-
-    </main>
-    <ProductPage/>
+      </main>
+      <ProductPage/>
     </div>
-
   )
 }
 
