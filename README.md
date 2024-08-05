@@ -1,7 +1,7 @@
 ## Overview
 
 This is a simple Task Manager API built with Node.js, Express.js, and MongoDB. It allows users to manage tasks with features such as adding, updating, removing tasks, and viewing tasks by day.
-
+Live Link : https://nexorand-project.onrender.com/api-docs/
 ## Features
 
 - **User Authentication**: Signup and login functionality.
@@ -21,7 +21,7 @@ This is a simple Task Manager API built with Node.js, Express.js, and MongoDB. I
 1. **Clone the Repository**
 
     \`\`\`bash
-    git clone https://github.com/your-username/task-manager-api.git
+    git clone https://github.com/SawantAchal/Nexorand-project.git
     cd backend
     \`\`\`
 
