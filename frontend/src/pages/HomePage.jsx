@@ -1,5 +1,5 @@
 import React from 'react'
-import bg from '../assets/bg2.jpg'
+import bg from '../assets/bg.jpg'
 import Header from '../components/Header'
 import ProductPage from './ProductPage'
 
